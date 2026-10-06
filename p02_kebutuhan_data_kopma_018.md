@@ -135,4 +135,4 @@ Koperasi Mahasiswa (Kopma) merupakan unit usaha mahasiswa yang mengelola penjual
 * **Link Repositori:** https://github.com/zalfazahiraaa/basisdata_25430018
 * **Tangkapan Layar Git Log:**
 
-![Bukti Git Log Modul 2 Kopma](img/git_log_modul2.png)
+![Bukti Git Log Modul 2 Kopma](<img/tangkapan_layar_git_log_kopma.png>)

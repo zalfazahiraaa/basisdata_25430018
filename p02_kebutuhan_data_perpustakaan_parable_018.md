@@ -140,4 +140,4 @@ Perpustakaan Parable merupakan unit layanan literasi yang mengelola sirkulasi ko
 * **Link Repositori:** https://github.com/zalfazahiraaa/basisdata_25430018
 * **Tangkapan Layar Git Log:**
 
-![Bukti Git Log Modul 2 Parable](img/git_log_modul2.png)
+![Bukti Git Log Modul 2 Parable](<img/tangkapan_layar_Git_log_perpustakaan_parable.png>)
