@@ -1,1 +1,8 @@
-Thumbs.db 
+# Abaikan file berisi kredensial/password
+*.env
+kredensial*.txt
+
+# Abaikan folder/file bawaan sistem atau editor
+.vscode/
+.DS_Store
+Thumbs.db
