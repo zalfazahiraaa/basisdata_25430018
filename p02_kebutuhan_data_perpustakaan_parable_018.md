@@ -1,13 +1,13 @@
 # Dokumen Kebutuhan Data - Perpustakaan Parable (perpustakaan_parable_018)
 
-**Nama:** Zalfa  
+**Nama:** Zalfa Zahira Putri  
 **NPM:** 25430018  
 **Kelas:** A  
-**Tanggal:** 7 Oktober 2026  
+**Tanggal:** 13 Oktober 2026  
 
 
 ## 1. Latar Belakang dan Aktivitas Organisasi
-Perpustakaan Parable merupakan unit layanan literasi yang mengelola sirkulasi koleksi pustaka, data keanggotaan, serta transaksi peminjaman dan pengembalian buku. Seiring bertambahnya jumlah anggota dan koleksi buku, pengolahan data manual berbasis kertas memicu tingginya risiko redundansi data, kehilangan catatan sirkulasi, serta ketidakakuratan laporan denda bulanan. Oleh karena itu, dibutuhkan perancangan sistem basis data relasional `perpus_018` yang terstruktur, aman, dan efisien untuk mendukung operasional Perpustakaan Parable secara otomatis.
+Perpustakaan Parable merupakan unit layanan literasi yang mengelola sirkulasi koleksi pustaka, data keanggotaan, pencatatan petugas, serta transaksi peminjaman dan pengembalian buku. Seiring bertambahnya jumlah anggota dan koleksi buku, pengolahan data manual berbasis kertas memicu tingginya risiko redundansi data, kehilangan catatan sirkulasi, serta ketidakakuratan laporan denda keterlambatan. Oleh karena itu, dibutuhkan perancangan sistem basis data relasional `perpustakaan_parable_018` yang terstruktur, aman, dan efisien untuk mendukung operasional Perpustakaan Parable secara otomatis.
 
 
 ## 2. Aktor dan Proses Bisnis
@@ -15,7 +15,7 @@ Perpustakaan Parable merupakan unit layanan literasi yang mengelola sirkulasi ko
 ### Tabel Aktor Sistem
 | ID Aktor | Nama Aktor | Peran dan Tanggung Jawab |
 | :--- | :--- | :--- |
-| **AKT-01** | Petugas / Pustakawan | Mengelola data buku, mendaftarkan anggota, memproses peminjaman dan pengembalian, serta mencatat denda. |
+| **AKT-01** | Petugas / Pustakawan | Mengelola data buku, mendaftarkan anggota, memproses peminjaman dan pengembalian, serta mencatat denda keterlambatan. |
 | **AKT-02** | Anggota Perpustakaan | Melakukan pencarian buku, meminjam buku, dan mengembalikan buku sesuai tenggat waktu. |
 | **AKT-03** | Kepala Perpustakaan | Menerima dan meninjau laporan statistik peminjaman serta rekapitulasi denda bulanan. |
 
@@ -30,108 +30,125 @@ Perpustakaan Parable merupakan unit layanan literasi yang mengelola sirkulasi ko
 
 
 ## 3. Dokumen Sumber yang Dianalisis
-1. **Formulir Pendaftaran Anggota Parable:** Berkas fisik memuat nama lengkap, Identitas (NIM/NIS), email, nomor telepon, dan tanggal pendaftaran.
-2. **Buku Induk Katalog Pustaka:** Daftar inventaris fisik memuat judul buku, nomor ISBN, penulis, penerbit, tahun terbit, dan stok tersisa.
-3. **Struk / Kartu Peminjaman Parable:** Bukti peminjaman yang mencantumkan ID transaksi, nama peminjam, daftar buku yang dipinjam, tanggal pinjam, dan tenggat pengembalian.
-4. **Bukti Pembayaran Denda:** Struk pencatatan keterlambatan pengembalian buku beserta nominal denda yang dibayarkan.
+1. **Formulir Pendaftaran Anggota Parable:** Berkas fisik memuat nomor anggota, NIM/NIS, nama lengkap, prodi/kelas, alamat, nomor telepon, dan status anggota.
+2. **Buku Induk Katalog Pustaka:** Daftar inventaris fisik memuat kode buku, judul buku, penulis, penerbit, tahun terbit, stok tersisa, dan kategori.
+3. **Struk / Kartu Peminjaman Parable:** Bukti peminjaman yang mencantumkan nomor transaksi, nama peminjam, petugas yang melayani, daftar buku, tanggal pinjam, dan tenggat pengembalian.
+4. **Bukti Pengembalian & Denda:** Struk pencatatan keterlambatan pengembalian buku beserta nominal denda yang dibayarkan dan status pembayarannya.
 
 
-## 4. Entitas Kandidat dan Elemen Data
+## 4. Entitas Kandidat dan Elemen Data (Berdasarkan ERD Fisik)
 
-1. **Anggota (`anggota`)**
-   * Elemen Data: `id_anggota` (PK), `nim_nis`, `nama_lengkap`, `email`, `nomor_telepon`, `tanggal_mendaftar`.
-2. **Kategori (`kategori`)**
-   * Elemen Data: `id_kategori` (PK), `nama_kategori`.
-3. **Buku (`buku`)**
-   * Elemen Data: `id_buku` (PK), `isbn`, `judul`, `penulis`, `penerbit`, `tahun_terbit`, `stok`, `id_kategori` (FK).
-4. **Peminjaman (`peminjaman`)**
-   * Elemen Data: `id_peminjaman` (PK), `id_anggota` (FK), `tanggal_pinjam`, `tanggal_tenggat`, `status`.
-5. **Detail Peminjaman (`detail_peminjaman`)**
-   * Elemen Data: `id_detail` (PK), `id_peminjaman` (FK), `id_buku` (FK), `jumlah`.
+1. **Petugas (`petugas`)**
+   * Elemen Data: `id_petugas` (PK), `kode_petugas`, `nama_petugas`, `username`, `password`, `no_telp_petugas`, `jabatan_petugas`.
+2. **Anggota (`anggota`)**
+   * Elemen Data: `id_anggota` (PK), `no_anggota`, `nim_nis_anggota`, `nama_anggota`, `prodi_kelas_anggota`, `alamat_anggota`, `no_telp_anggota`, `status_anggota`.
+3. **Kategori Buku (`kategori_buku`)**
+   * Elemen Data: `id_kategori` (PK), `kode_kategori`, `nama_kategori`.
+4. **Buku (`buku`)**
+   * Elemen Data: `id_buku` (PK), `kode_buku`, `judul_buku`, `penulis_buku`, `penerbit_buku`, `tahun_terbit`, `stok_buku`, `id_kategori` (FK).
+5. **Peminjaman (`peminjaman`)**
+   * Elemen Data: `id_peminjaman` (PK), `no_transaksi_pinjam`, `tgl_pinjam`, `tgl_jatuh_tempo`, `id_anggota` (FK), `id_petugas` (FK), `status_peminjaman`.
+6. **Detail Peminjaman (`detail_peminjaman`)**
+   * Elemen Data: `id_peminjaman` (PK, FK), `id_buku` (PK, FK), `jumlah_pinjam`.
+7. **Pengembalian (`pengembalian`)**
+   * Elemen Data: `id_pengembalian` (PK), `id_peminjaman` (FK), `id_petugas` (FK), `tgl_dikembalikan`, `keterlambatan_hari`, `denda_keterlambatan`, `status_denda`.
 
 
 ## 5. Aturan Bisnis (Tabel AB-xx)
 
 | Kode AB | Pernyataan Aturan Bisnis | Implikasi Pada Basis Data |
 | :--- | :--- | :--- |
-| **AB-01** | Setiap anggota Perpustakaan Parable harus memiliki nomor identitas (NIM/NIS) dan email yang unik. | Kolom `nim_nis` dan `email` diberi batasan `UNIQUE` dan `NOT NULL`. |
-| **AB-02** | Satu entri buku wajib tergolong dalam tepat satu kategori pustaka. | `id_kategori` pada tabel `buku` menjadi *Foreign Key* merujuk ke tabel `kategori`. |
-| **AB-03** | Peminjaman dapat memuat lebih dari satu buku dalam satu transaksi. | Dibuat tabel relasi *many-to-many* (`detail_peminjaman`) yang menghubungkan `peminjaman` dan `buku`. |
-| **AB-04** | Status transaksi peminjaman hanya boleh berisi nilai: 'dipinjam', 'dikembalikan', atau 'terlambat'. | Kolom `status` menggunakan tipe data `ENUM('dipinjam', 'dikembalikan', 'terlambat')`. |
-| **AB-05** | Stok buku tidak boleh bernilai negatif dan secara bawaan bernilai 0 jika belum diisi. | Kolom `stok` dikonfigurasi `INT NOT NULL DEFAULT 0`. |
+| **AB-01** | Setiap petugas dan anggota wajib memiliki identitas serta username/nomor unik. | Kolom `kode_petugas`, `username`, `no_anggota`, dan `nim_nis_anggota` diberi batasan `UNIQUE` dan `NOT NULL`. |
+| **AB-02** | Setiap entri buku wajib tergolong dalam tepat satu kategori pustaka. | Kolom `id_kategori` pada tabel `buku` menjadi *Foreign Key* merujuk ke tabel `kategori_buku`. |
+| **AB-03** | Transaksi peminjaman harus dilayani oleh petugas dan dilakukan oleh anggota terdaftar. | Kolom `id_petugas` dan `id_anggota` dikonfigurasi sebagai *Foreign Key* yang wajib diisi. |
+| **AB-04** | Satu transaksi peminjaman dapat mencakup banyak buku sekaligus. | Menggunakan tabel relasi *many-to-many* (`detail_peminjaman`). |
+| **AB-05** | Stok buku dan denda tidak boleh bernilai negatif serta memiliki nilai default aman. | Kolom `stok_buku` diset `INT DEFAULT 0` dan `denda_keterlambatan` diset `DECIMAL(10,2) DEFAULT 0.00`. |
 
 
 ## 6. Kebutuhan Informasi (Tabel KI-xx)
 
 | Kode KI | Kebutuhan Informasi | Sumber Data (Tabel) |
 | :--- | :--- | :--- |
-| **KI-01** | Daftar seluruh anggota aktif Perpustakaan Parable beserta informasi kontak lengkap. | `anggota` |
-| **KI-02** | Pencarian ketersediaan stok buku berdasarkan judul atau kategori pustaka. | `buku`, `kategori` |
-| **KI-03** | Rekap harian daftar peminjaman buku yang belum dikembalikan (*active loans*). | `peminjaman`, `anggota`, `detail_peminjaman`, `buku` |
-| **KI-04** | Laporan riwayat transaksi peminjaman per anggota dalam kurun waktu tertentu. | `anggota`, `peminjaman`, `detail_peminjaman` |
+| **KI-01** | Daftar seluruh anggota aktif Perpustakaan Parable beserta informasi kontak. | `anggota` |
+| **KI-02** | Pencarian ketersediaan stok buku dan kategorinya. | `buku`, `kategori_buku` |
+| **KI-03** | Rekap harian daftar peminjaman buku aktif (*active loans*). | `peminjaman`, `anggota`, `petugas`, `detail_peminjaman`, `buku` |
+| **KI-04** | Laporan riwayat transaksi peminjaman dan denda per anggota. | `anggota`, `peminjaman`, `pengembalian` |
 
 
 ## 7. Matriks CRUD
 
 | Entitas / Tabel | PB-01 (Pendaftaran) | PB-02 (Katalog Buku) | PB-03 (Peminjaman) | PB-04 (Pengembalian) | PB-05 (Pelaporan) |
 | :--- | :---: | :---: | :---: | :---: | :---: |
+| **`petugas`** | - | - | **R** | **R** | **R** |
 | **`anggota`** | **C, R, U** | - | **R** | **R** | **R** |
-| **`kategori`** | - | **C, R, U, D** | **R** | - | **R** |
+| **`kategori_buku`**| - | **C, R, U, D** | **R** | - | **R** |
 | **`buku`** | - | **C, R, U, D** | **R, U** | **R, U** | **R** |
 | **`peminjaman`** | - | - | **C, R** | **R, U** | **R** |
-| **`detail_peminjaman`** | - | - | **C, R** | **R** | **R** |
-
-*(Keterangan: **C** = Create, **R** = Read, **U** = Update, **D** = Delete)*
+| **`detail_peminjaman`**| - | - | **C, R** | **R** | **R** |
+| **`pengembalian`** | - | - | - | **C, R, U** | **R** |
 
 
 ## 8. Kamus Data Awal
 
-| Nama Tabel | Nama Kolom | Tipe Data | Batasan / Constraint | Penanggung Jawab Data |
+| Nama Tabel | Nama Kolom | Tipe Data | Batasan / Constraint | Penanggung Jawab |
 | :--- | :--- | :--- | :--- | :--- |
+| **`petugas`** | `id_petugas` | INT | PRIMARY KEY, AUTO_INCREMENT | Admin Sistem |
+| | `kode_petugas` | VARCHAR(20) | NOT NULL, UNIQUE | Admin Sistem |
+| | `nama_petugas` | VARCHAR(100) | NOT NULL | Admin Sistem |
+| | `username` | VARCHAR(50) | NOT NULL, UNIQUE | Admin Sistem |
+| | `password` | VARCHAR(50) | NOT NULL | Admin Sistem |
+| | `no_telp_petugas`| VARCHAR(15) | NULL | Admin Sistem |
+| | `jabatan_petugas`| VARCHAR(50) | NULL | Admin Sistem |
 | **`anggota`** | `id_anggota` | INT | PRIMARY KEY, AUTO_INCREMENT | Petugas Administrasi |
-| | `nim_nis` | VARCHAR(20) | NOT NULL, UNIQUE | Petugas Administrasi |
-| | `nama_lengkap` | VARCHAR(100) | NOT NULL | Petugas Administrasi |
-| | `email` | VARCHAR(100) | NOT NULL, UNIQUE | Petugas Administrasi |
-| | `nomor_telepon` | VARCHAR(15) | NULL | Petugas Administrasi |
-| | `tanggal_mendaftar`| DATE | DEFAULT CURRENT_DATE | Petugas Administrasi |
-| **`kategori`** | `id_kategori` | INT | PRIMARY KEY, AUTO_INCREMENT | Pustakawan Katalog |
-| | `nama_kategori` | VARCHAR(50) | NOT NULL, UNIQUE | Pustakawan Katalog |
+| | `no_anggota` | VARCHAR(20) | NOT NULL, UNIQUE | Petugas Administrasi |
+| | `nim_nis_anggota`| VARCHAR(30) | NOT NULL, UNIQUE | Petugas Administrasi |
+| | `nama_anggota`| VARCHAR(100) | NOT NULL | Petugas Administrasi |
+| | `prodi_kelas_anggota`| VARCHAR(50) | NOT NULL | Petugas Administrasi |
+| | `alamat_anggota`| TEXT | NULL | Petugas Administrasi |
+| | `no_telp_anggota`| VARCHAR(15) | NULL | Petugas Administrasi |
+| | `status_anggota`| ENUM | NOT NULL, DEFAULT 'Aktif' | Petugas Administrasi |
+| **`kategori_buku`**| `id_kategori`| INT | PRIMARY KEY, AUTO_INCREMENT | Pustakawan Katalog |
+| | `kode_kategori` | VARCHAR(20) | NOT NULL, UNIQUE | Pustakawan Katalog |
+| | `nama_kategori` | VARCHAR(100) | NOT NULL | Pustakawan Katalog |
 | **`buku`** | `id_buku` | INT | PRIMARY KEY, AUTO_INCREMENT | Pustakawan Katalog |
-| | `isbn` | VARCHAR(20) | NOT NULL, UNIQUE | Pustakawan Katalog |
-| | `judul` | VARCHAR(150) | NOT NULL | Pustakawan Katalog |
-| | `penulis` | VARCHAR(100) | NOT NULL | Pustakawan Katalog |
-| | `penerbit` | VARCHAR(100) | NULL | Pustakawan Katalog |
-| | `tahun_terbit` | INT | NULL | Pustakawan Katalog |
-| | `stok` | INT | NOT NULL, DEFAULT 0 | Pustakawan Katalog |
-| | `id_kategori` | INT | FOREIGN KEY (`kategori`) | Pustakawan Katalog |
+| | `kode_buku` | VARCHAR(30) | NOT NULL, UNIQUE | Pustakawan Katalog |
+| | `judul_buku` | VARCHAR(255) | NOT NULL | Pustakawan Katalog |
+| | `penulis_buku` | VARCHAR(100) | NOT NULL | Pustakawan Katalog |
+| | `penerbit_buku`| VARCHAR(100) | NOT NULL | Pustakawan Katalog |
+| | `tahun_terbit` | YEAR | NOT NULL | Pustakawan Katalog |
+| | `stok_buku` | INT | NOT NULL, DEFAULT 0 | Pustakawan Katalog |
+| | `id_kategori` | INT | FOREIGN KEY (`kategori_buku`) | Pustakawan Katalog |
 | **`peminjaman`**| `id_peminjaman`| INT | PRIMARY KEY, AUTO_INCREMENT | Petugas Sirkulasi |
+| | `no_transaksi_pinjam`| VARCHAR(30) | NOT NULL, UNIQUE | Petugas Sirkulasi |
+| | `tgl_pinjam` | DATE | DEFAULT (CURRENT_DATE) | Petugas Sirkulasi |
+| | `tgl_jatuh_tempo`| DATE | NOT NULL | Petugas Sirkulasi |
 | | `id_anggota` | INT | FOREIGN KEY (`anggota`) | Petugas Sirkulasi |
-| | `tanggal_pinjam` | DATE | NOT NULL | Petugas Sirkulasi |
-| | `tanggal_tenggat` | DATE | NOT NULL | Petugas Sirkulasi |
-| | `status` | ENUM | DEFAULT 'dipinjam' | Petugas Sirkulasi |
+| | `id_petugas` | INT | FOREIGN KEY (`petugas`) | Petugas Sirkulasi |
+| | `status_peminjaman`| ENUM | NOT NULL, DEFAULT 'Dipinjam' | Petugas Sirkulasi |
+| **`detail_peminjaman`**| `id_peminjaman`| INT | PK, FK (`peminjaman`) | Petugas Sirkulasi |
+| | `id_buku` | INT | PK, FK (`buku`) | Petugas Sirkulasi |
+| | `jumlah_pinjam` | INT | NOT NULL, DEFAULT 1 | Petugas Sirkulasi |
+| **`pengembalian`**| `id_pengembalian`| INT | PRIMARY KEY, AUTO_INCREMENT | Petugas Sirkulasi |
+| | `id_peminjaman`| INT | FOREIGN KEY (`peminjaman`) | Petugas Sirkulasi |
+| | `id_petugas` | INT | FOREIGN KEY (`petugas`) | Petugas Sirkulasi |
+| | `tgl_dikembalikan`| DATE | DEFAULT (CURRENT_DATE) | Petugas Sirkulasi |
+| | `keterlambatan_hari`| INT | NOT NULL, DEFAULT 0 | Petugas Sirkulasi |
+| | `denda_keterlambatan`| DECIMAL(10,2)| NOT NULL, DEFAULT 0.00 | Petugas Sirkulasi |
+| | `status_denda` | ENUM | NOT NULL, DEFAULT 'Tidak Ada' | Petugas Sirkulasi |
 
 
 ## 9. Kebutuhan Non-Fungsional Data
-
-1. **Volume Data:**
-   * Basis data dirancang untuk menangani estimasi hingga **10.000 anggota aktif**, **25.000 judul/eksemplar buku**, serta **100.000 transaksi peminjaman** per tahun tanpa penurunan performa kueri yang signifikan.
-2. **Retensi Data:**
-   * Riwayat transaksi peminjaman disimpan secara aktif selama **5 tahun** operasional. Transaksi di atas 5 tahun akan diarsipkan ke basis data histori tersendiri.
-3. **Privasi dan Keamanan Data:**
-   * Data kontak sensitif anggota (`email`, `nomor_telepon`) hanya boleh diakses oleh pengguna akun kerja `dev_018` dan admin.
-   * Akses publik/tamu (`tamu_018`) dibatasi hanya pada hak baca (`SELECT`) katalog buku.
+1. **Volume Data:** Mampu menangani hingga **10.000 data anggota**, **25.000 koleksi buku**, dan **100.000 transaksi sirkulasi** per tahun.
+2. **Retensi Data:** Riwayat transaksi peminjaman dan denda disimpan aktif minimal **5 tahun** untuk keperluan audit tahunan perpustakaan.
+3. **Privasi dan Keamanan Basis Data:** Hak akses pengelolaan dibatasi pada akun resmi (`dev_018`), sementara akun publik dibatasi hanya untuk pembacaan katalog buku.
+4. **Kinerja Kueri:** Waktu respons pencarian buku dan rekapitulasi laporan harian dipastikan berjalan cepat di bawah 1 detik.
 
 
 ## 10. Isu Kualitas Data yang Diantisipasi
-
-1. **Duplikasi Identitas Anggota:**
-   * *Antisipasi:* Menerapkan batasan `UNIQUE` pada kolom `nim_nis` dan `email`.
-2. **Inkonsistensi Kategorisasi Buku:**
-   * *Antisipasi:* Menggunakan relasi `FOREIGN KEY` ke tabel referensi `kategori` alih-alih menginput teks kategori secara manual.
-3. **Data Peminjaman Tanpa Referensi Sah (*Orphan Records*):**
-   * *Antisipasi:* Menggunakan constraint `FOREIGN KEY ... ON DELETE CASCADE ON UPDATE CASCADE` agar integritas relasi antar-tabel terjamin otomatis.
-4. **Kesalahan Format Tanggal dan Status:**
-   * *Antisipasi:* Mengunci format tanggal dengan tipe `DATE` dan membatasi pilihan status transaksi menggunakan `ENUM('dipinjam', 'dikembalikan', 'terlambat')`.
+1. **Duplikasi Data Anggota & Petugas:** Diantisipasi dengan penerapan batasan *Constraint* `UNIQUE` pada kolom identitas dan username.
+2. **Inkonsistensi Kategori Buku:** Diantisipasi melalui normalisasi tabel dan relasi *Foreign Key* ke tabel `kategori_buku`.
+3. **Data Yatim (*Orphan Records*):** Diantisipasi dengan aturan kaskade pada relasi *Foreign Key* tabel detail dan transaksi.
+4. **Kesalahan Nominal Denda:** Diantisipasi menggunakan tipe data presisi tinggi yaitu `DECIMAL(10,2)`.
 
 
 
